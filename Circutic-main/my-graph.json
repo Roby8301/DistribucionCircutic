@@ -1,0 +1,71 @@
+{
+    "@context": "https://schema.org",
+    "@type": "WebAPI",
+    "name": "Device Management API",
+    "description": "API for managing users, devices, purchases, and ratings",
+    "provider": {
+      "@type": "Organization",
+      "name": "Circutic",
+      "url": "https://www.circutic.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Barrachina n18",
+        "addressLocality": "Castellon",
+        "addressRegion": "CS",
+        "postalCode": "12005",
+        "addressCountry": "ES"
+      }
+    },
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Carles Valero",
+        "url": "https://www.uji.es/perfils/estudiantat/uji/"
+
+      },
+      {
+        "@type": "Person",
+        "name": "Robert Badeanu",
+        "url": "https://www.uji.es/perfils/estudiantat/uji/"
+      },
+      {
+        "@type": "Person",
+        "name": "Diego Sales",
+        "url": "https://www.uji.es/perfils/estudiantat/uji/"
+      },
+      {
+        "@type": "Person",
+        "name": "Lucas Prades",
+        "url": "https://www.uji.es/perfils/estudiantat/uji/"
+      }
+    ],
+    "serviceType": "Device Management",
+    "documentation": "https://docs.circutic.com/device-management-api",
+    "endpoint": [
+      {
+        "@type": "EntryPoint",
+        "url": "https://api.circutic.com/v1/devices",
+        "encodingType": "application/json",
+        "httpMethod": "GET"
+      },
+      {
+        "@type": "EntryPoint",
+        "url": "https://api.circutic.com/v1/users",
+        "encodingType": "application/json",
+        "httpMethod": "GET"
+      }
+    ],
+    "relatedLink": [
+      {
+        "@type": "WebPage",
+        "url": "https://www.circutic.com/devices",
+        "name": "Device Page"
+      },
+      {
+        "@type": "WebPage",
+        "url": "https://www.circutic.com/users",
+        "name": "User Page"
+      }
+    ]
+  }
+  

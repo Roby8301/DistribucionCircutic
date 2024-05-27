@@ -1,0 +1,107 @@
+type User {
+  _id: String!
+  name: String!
+  email: String!
+  address: String   
+  password: String!  
+}
+
+type Device {
+  _id: String!
+  name: String!
+  type: String!
+  brand: String!
+  ownerId: String!
+  price: Float!        
+  description: String! 
+  status: String!
+}
+
+type Purchase {
+  _id: String!
+  buyerId: String!
+  deviceId: String!
+  timestamp: String!
+  amount: Float!
+}
+
+type Rating {
+  _id: String!
+  giverId: String!
+  receiverId: String!
+  rating: Float!
+  comment: String
+}
+
+type Query {
+  users: [User!]!
+  user(id: String!): User
+  devices: [Device!]!
+  device(id: String!): Device
+  purchases: [Purchase!]!
+  purchase(id: String!): Purchase
+  ratings: [Rating!]!
+  rating(id: String!): Rating
+  purchasesByUser(userId: String!): [Purchase!]!
+  ratingsByUser(userId: String!): [Rating!]!
+  devicesByBrand(brand: String!): [Device!]!
+  devicesByType(type: String!): [Device!]!
+  purchaseDetails(purchaseId: String!): Purchase!
+  visibleDevices: [Device!]!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  createDevice(input: CreateDeviceInput!): Device!
+  createPurchase(input: CreatePurchaseInput!): Purchase!
+  createRating(input: CreateRatingInput!): Rating!
+  deleteDevice(id:  String!): Boolean!
+  updateDevice(id: String!, input: UpdateDeviceInput!): Device!
+  updateUser(id: String!, input: UpdateUserInput!): User!
+  changeDeviceStatus(id: String!, status: String!): Device!
+}
+
+input UpdateDeviceInput {
+  name: String
+  description: String
+  brand: String
+  price: Float
+  type: String
+}
+
+input UpdateUserInput {
+  name: String
+  address: String
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  address: String
+  password: String!
+}
+
+input CreateDeviceInput {
+  name: String!
+  type: String!
+  brand: String!
+  ownerId: String!
+  price: Float!
+  description: String
+  status: String
+}
+
+input CreatePurchaseInput {
+  buyerId: String!
+  deviceId: String!
+  timestamp: String!
+  amount: Float!
+}
+
+input CreateRatingInput {
+  giverId: String!
+  receiverId: String!
+  rating: Float!
+  comment: String
+}
+

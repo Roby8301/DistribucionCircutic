@@ -1,0 +1,92 @@
+#top-bar {
+    background-color: red;
+    height: 5%;
+    align-items: left;
+}
+
+#circutic_img {
+    width: 10%;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: red;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 70px;
+}
+h2 {
+    text-align: center;
+    color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 50px;
+}
+/* Estilos generales */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px; /* Ajusta el ancho según tus necesidades */
+    margin: 0 auto; /* Centra horizontalmente */
+  }
+  
+  input[type="text"] {
+    padding: 12px 40px 12px 12px; /* Ajusta el relleno para dejar espacio para el ícono */
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 20px; /* Mayor borde redondeado */
+    font-size: 16px; /* Ajusta el tamaño del texto */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 300px; /* Establece un ancho máximo */
+  }
+  
+  button[type="submit"] {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  button[type="submit"] img {
+    width: 24px; /* Ajusta el tamaño del ícono */
+    height: 24px;
+  }
+
+  .img_row {
+    text-align: center;
+    display: flex; /* Establece el contenedor como un contenedor flexible */
+    justify-content: center; /* Centra los elementos horizontalmente */
+  }
+  
+  .search-img-index {
+    padding: 30px ;
+  }
+
+  .search-img-index img {
+    height: 100px;
+  }
+
+  #sell_btn {
+    text-align: center;
+}
+
+#sell_btn button {
+    background-color: red;
+    font-family: Verdana, sans-serif; /* Utiliza la fuente Verdana */
+    font-size: 1.2em; /* Tamaño de fuente más grande */
+    font-weight: bold; /* Hace que el texto esté en negrita */
+    color: white; /* Color de texto blanco */
+    padding: 10px 20px; /* Ajusta el relleno del botón */
+    border: none; /* Elimina el borde del botón */
+    border-radius: 20px; /* Ajusta los radios de las esquinas */
+    outline: none; /* Elimina el contorno del botón al hacer clic */
+    cursor: pointer; /* Cambia el cursor al pasar por encima del botón */
+}
+
+#sell_btn button:hover {
+    background-color: darkred; /* Cambia el color de fondo al pasar el cursor */
+}
+
+
+  .container {
+align-items: center;  }

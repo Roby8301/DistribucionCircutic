@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <title>BLOGS</title>
+
+    <!-- Required Stylesheets -->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"
+    />
+
+    <!-- Required scripts -->
+    <script src="//cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+    <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+  </head>
+  <body>
+    <!-- Our application root element -->
+    <div id="app">
+      <b-container>
+        <b-jumbotron header="BLOGS" lead="Demo de consumo de servicios con Vue2 y BootstrapVue">
+          <p>Para más información consulta:</p>
+          <b-btn variant="primary" href="https://bootstrap-vue.js.org/">¡ Quiero saber más de BootstrapVue !</b-btn>
+        </b-jumbotron>
+
+        <b-form-group horizontal :label-cols="4" label="Dime tu nombre">
+          <b-form-input v-model.trim="name"></b-form-input>
+        </b-form-group>
+
+        <b-alert variant="success" :show="showAlert">
+           Bienvenido {{ name }}!
+           <b-button @click="addUser" size="sm">Crear Usuario</b-button>
+        </b-alert>
+      
+        <b-form-group horizontal :label-cols="4" label="Dime un tema">
+          <b-form-input v-model.trim="query" placeholder="... por ejemplo moto" 
+                        @keyup.enter="searchBlogs">
+          </b-form-input>
+        </b-form-group>
+
+      <div v-if="blogs.length>0">
+        <b-card>
+       		<ul>
+        	   <p v-for="blog in blogs">
+                <b-button @click="getPosts(blog.title)">{{blog.title}}</b-button> by {{blog.creator.name}}
+             </p>
+      		</ul>
+        </b-card>
+      </div>
+      <b-card v-else variant="warning">No hay resultados</b-card>
+      
+      <b-card v-if="blogId.length > 0">
+          
+        <p v-if="posts.length==0"> Aún no hay mensajes</p>
+
+          <b-table responsive :items="posts">
+            <template #cell(author)="data">
+               {{ data.value.name }}
+            </template>
+          </b-table>
+
+          <b-form-group>
+             <b-form-input v-model.trim="post" placeholder="Nuevo comentario" 
+                           @keyup.enter="addPost">
+             </b-form-input>
+
+      </b-card>
+
+
+      </b-container>
+    </div>
+
+    <!-- Start running your app -->
+
+    <script>
+      window.app  = new Vue({
+        el: '#app',
+        data: {
+          name:   '', //nombre de usuario
+          query:  '', //búsqueda
+          blogId: '', //blog activado
+          blogs:  [], //blogs de la búsqueda
+          posts:  [], //posts del blog activado
+          post:   '', //nuevo post
+          n: 1        //numerar titulos anonimos del post
+        },
+        computed: {
+          showAlert() {
+            return this.name.length > 2 ? true : false
+          }
+        },
+        methods:{
+
+          searchBlogs(){
+            let self = this
+            let gQL = `query{searchBlog(q:"${this.query}"){title creator{name}}}`
+            
+            fetch('/graphql?query=' + encodeURIComponent(gQL))
+            .then(function(r){return r.json()})
+            .then(function(json){
+              self.blogs = json.data.searchBlog
+            })
+            .catch(function(error){console.log(error)})
+          },
+
+          getPosts(blogId){
+            let self = this
+            
+            this.blogId = blogId
+
+            let gQL = `query{posts(blogId:"${this.blogId}"){title content author{name}}}`
+            //console.log(gQL)
+            fetch('/graphql?query=' + encodeURIComponent(gQL))
+            .then(function(r){return r.json()})
+            .then(function(json){
+              self.posts = json.data.posts //TO BE COMPLETED : only title and content
+            })
+            .catch(function(error){console.log(error)})
+          },
+
+          addUser(){
+
+            let self = this
+
+            const query = {
+
+                      query: `mutation {
+                          addUser(
+                             name: "${this.name}",
+                          )
+                          {name} 
+                      }`
+            }
+            //console.log(query.query)
+            fetch('/graphql', {
+                  headers: {'content-type': 'application/json'},
+                  method: 'POST',
+                  body: JSON.stringify(query),
+            })
+            .then(function(r){return r.json()})
+            .then(function(json){
+
+                  if (json.errors) {
+                    alert("Error! (mira la consola)")
+                    console.log(json.errors)
+                  }
+                  else             
+                    alert('Usuario creado')
+            })
+            .catch(function(error){console.log(error)})  
+          
+          },
+          addPost(){
+            
+            let self = this
+
+            const query = {
+
+                      query: `mutation {
+                          addPost(
+                             title:    "Sin título ${this.name} ${this.n}",
+                             content:  "${this.post}",
+                             authorId: "user0",
+                             blogId:   "${this.blogId}"
+                          )
+                          {title content author{name}} 
+                      }`
+            }
+            
+            //console.log(query.query)
+
+            fetch('/graphql', {
+                  headers: {'content-type': 'application/json'},
+                  method: 'POST',
+                  body: JSON.stringify(query),
+            })
+            .then(function(r){return r.json()})
+            .then(function(json){
+                  if (json.errors) {
+                    alert("Error! (mira la consola)")
+                    console.log(json.errors)
+                  } else {
+                    self.n++
+                    self.post = ''
+                    //el post se añadirá vía SSE
+                  }
+            })
+            .catch(function(error){console.log(error)})  
+          }
+        },
+        mounted(){
+
+          let self = this
+          let ES = new EventSource('/news') //ruta API con notificaciones
+
+          console.log('Creando listener de eventos de servidor...')
+
+          
+          ES.addEventListener('new-post', function(event){
+            let data = JSON.parse(JSON.parse(event.data)) 
+            //bytes to string -> string to json
+            if (data.blog.title == self.blogId)
+               self.posts.push(data)
+          }, false)
+          
+        }
+      })
+    </script>
+  </body>
+</html>
