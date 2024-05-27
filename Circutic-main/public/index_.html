@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circutic</title>
+    <link rel="icon" href="web/resources/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/web/resources/styles.css">
+    
+</head>
+<body>
+    <div id="top-bar">
+        <img id="circutic_img" src="/web/resources/circutic.png" alt="circutic.png">
+        <div id="menu_button"></div>
+    </div> 
+    <h1 id="welcome_text">BIENVENIDO A CIRCUTIC</h1>
+    <h2>¿Qué estás buscando?</h2>
+    
+    <div class="container">
+        <div class="search-container">
+            <input type="text" placeholder="Ingrese la marca">
+            <button type="submit"><img src="/web/resources/lupa.png" alt="Buscar"></button>
+        </div>
+      
+    <div class="img_row">
+        <div class="search-img-index" >
+            <img src="/web/resources/tablet.jpg">
+            <p>TABLETS</p>
+        </div>
+        <div class="search-img-index" >
+            <img src="/web/resources/ordenador.jpg">
+            <p>ORDENADORES</p>
+        </div>  
+        <div class="search-img-index" >
+            <img src="/web/resources/cpu.jpg">
+            <p>COMPONENTES</p>
+        </div>
+    </div>
+        <div id="sell_btn">
+            <button id="vender_btn">QUIERO VENDER</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtenemos el botón por su ID
+            var venderBtn = document.getElementById("vender_btn");
+            // Agregamos un evento de clic al botón
+            venderBtn.addEventListener("click", function() {
+                // Redirigimos al usuario a la página sell.html
+                window.location.href = "sell.html";
+            });
+        });
+    </script>
+</body>
+</html>
